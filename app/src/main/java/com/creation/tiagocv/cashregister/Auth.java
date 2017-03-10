@@ -1,9 +1,7 @@
 package com.creation.tiagocv.cashregister;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -46,7 +44,7 @@ public class Auth extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
-                Intent myIntent = new Intent(Auth.this, AddActivity.class);
+                Intent myIntent = new Intent(Auth.this, AddFragment.class);
                 Auth.this.startActivity(myIntent);
                 finish();
                 return;
