@@ -1,5 +1,7 @@
 package com.creation.tiagocv.cashregister;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,22 +48,13 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Add Transactions");
         setSupportActionBar(toolbar);
 
+
         // Ativa a funcionalidade offline da firebase database
         // O boolean calledAlready é necessário pois se a app voltar a correr esta linha na mesma sessão, crasha
         if (!calledAlready) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
-
-        // FloatingActionButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         // Inicialização do hamburger menu - gerado automaticamente
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -80,8 +73,8 @@ public class MainActivity extends AppCompatActivity
             FirebaseUser user = auth.getCurrentUser();
 
             // TextView teste: Mostra o nome do usuário
-            TextView test = (TextView) findViewById(R.id.test_textview);
-            test.setText("Hello, " + user.getDisplayName() + "!");
+            //TextView test = (TextView) findViewById(R.id.test_textview);
+            //test.setText("Hello, " + user.getDisplayName() + "!");
 
             // Buscar a View dentro do hamburger menu
             View hView =  navigationView.getHeaderView(0);
@@ -92,6 +85,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             Intent myIntent = new Intent(this, Auth.class);
             this.startActivity(myIntent);
+            finish();
         }
 
         // Buscar os dados do usuário
@@ -163,6 +157,9 @@ public class MainActivity extends AppCompatActivity
             }
         };
         regRef.addValueEventListener(postListener2);
+
+        MenuItem addItem = (MenuItem) navigationView.getMenu().getItem(0);
+        onNavigationItemSelected(addItem);
 
 
     }
@@ -266,9 +263,16 @@ public class MainActivity extends AppCompatActivity
         // Ações a fazer para cada um dos botões do hamburger menu
         if (id == R.id.nav_logOut) {
             signOut();
-        } /**else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_add) {
+            // Create a new fragment and specify the planet to show based on position
+            Fragment fragment = new AddActivity();
 
-        } else if (id == R.id.nav_slideshow) {
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        } /**else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
