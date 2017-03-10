@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Shop shop_class = dataSnapshot.getValue(Shop.class);
 
+                Log.d("DEBUG","Loja: " + shop_class.getTitle());
                 // Dentro do hamburger menu, defenir uma das TextViews para mostrar o título da Shop
                 title.setText(shop_class.getTitle());
             }
@@ -269,6 +270,39 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
+        } else if (id == R.id.nav_history){
+            // Create a new fragment
+            Fragment fragment = new HistoryFragment();
+
+            getSupportActionBar().setTitle("History");
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        } else if (id == R.id.nav_statistics){
+            // Create a new fragment
+            Fragment fragment = new StatisticsFragment();
+
+            getSupportActionBar().setTitle("Statistics");
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        } else if (id == R.id.nav_items){
+            // Create a new fragment
+            Fragment fragment = new ItemsFragment();
+
+            getSupportActionBar().setTitle("Items");
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
         } else if (id == R.id.nav_registers) {
             // Create a new fragment
             Fragment fragment = new RegistersFragment();
@@ -280,7 +314,9 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
-        } /**else if (id == R.id.nav_manage) {
+        }
+
+        /**else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

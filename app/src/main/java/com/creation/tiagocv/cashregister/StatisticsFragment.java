@@ -2,28 +2,31 @@ package com.creation.tiagocv.cashregister;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class
-RegistersFragment extends Fragment {
+/**
+ * Created by tcver on 10/03/2017.
+ */
 
-    public static RegistersFragment newInstance() {
-        RegistersFragment fragment = new RegistersFragment();
+public class StatisticsFragment extends Fragment {
+    public static StatisticsFragment newInstance(){
+        StatisticsFragment fragment = new StatisticsFragment();
         return fragment;
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_registers, container, false);
+        View view = inflater.inflate(R.layout.activity_statistics, container, false);
         //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Transactions");
         //setSupportActionBar(toolbar);
@@ -37,11 +40,9 @@ RegistersFragment extends Fragment {
             }
         });
 
-        Log.d("DEBUG", "Entered RegistersFragment!");
+        Log.d("DEBUG", "Entered StatisticsFragment!");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         return view;
     }
-
 }
