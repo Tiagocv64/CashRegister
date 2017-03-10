@@ -46,7 +46,7 @@ public class Auth extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
-                Intent myIntent = new Intent(Auth.this, CashRegisterMain.class);
+                Intent myIntent = new Intent(Auth.this, MainActivity.class);
                 Auth.this.startActivity(myIntent);
                 finish();
                 return;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@android:drawable/ic_input_add"
+            android:title="Add Transactions" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_statistics"
+            android:icon="?android:attr/actionModePasteDrawable"
+            android:title="Statistics" />
+    </group>
+
+    <item android:title="Database">
+        <menu>
+            <item
+                android:id="@+id/nav_items"
+                android:icon="@android:drawable/ic_dialog_dialer"
+                android:title="Items" />
+            <item
+                android:id="@+id/nav_registers"
+                android:icon="@android:drawable/ic_input_get"
+                android:title="Registers" />
+        </menu>
+    </item>
+
+    <item android:title="Tools">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_support"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="Support" />
+
+            <item
+                android:id="@+id/nav_logOut"
+                android:icon="?android:attr/actionModeCloseDrawable"
+                android:title="Sign Out" />
+        </menu>
+    </item>
+
+</menu>
