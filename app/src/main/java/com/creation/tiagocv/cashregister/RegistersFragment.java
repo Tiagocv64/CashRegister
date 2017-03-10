@@ -13,16 +13,16 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AddFragment extends Fragment {
+public class RegistersFragment extends Fragment {
 
-    public static AddFragment newInstance() {
-        AddFragment fragment = new AddFragment();
+    public static RegistersFragment newInstance() {
+        RegistersFragment fragment = new RegistersFragment();
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_add, container, false);
+        View view = inflater.inflate(R.layout.activity_registers, container, false);
         //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Transactions");
         //setSupportActionBar(toolbar);
@@ -36,12 +36,9 @@ public class AddFragment extends Fragment {
             }
         });
 
-        Log.d("DEBUG", "Entered AddFragment!");
+        Log.d("DEBUG", "Entered RegistersFragment!");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // TextView teste: Mostra o nome do usuário
-        TextView test = (TextView) view.findViewById(R.id.test_textview);
-        test.setText("Hello, " + user.getDisplayName() + "!");
 
         return view;
     }

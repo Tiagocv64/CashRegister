@@ -259,17 +259,28 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_logOut) {
             signOut();
         } else if (id == R.id.nav_add) {
-            // Create a new fragment and specify the planet to show based on position
+            // Create a new fragment
             Fragment fragment = new AddFragment();
+
+            getSupportActionBar().setTitle("Add Transaction");
 
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
-        } /**else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_registers) {
+            // Create a new fragment
+            Fragment fragment = new RegistersFragment();
 
-        } else if (id == R.id.nav_manage) {
+            getSupportActionBar().setTitle("Registers");
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        } /**else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
