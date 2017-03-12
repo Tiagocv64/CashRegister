@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insert the new register's data to allow it access to your Shop"
+        android:textColor="#80000000"
+        android:textSize="13sp"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register Email"
+        android:textColor="#80000000"
+        android:textSize="13sp"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email_editText"
+        android:selectAllOnFocus="false"
+        android:singleLine="true"
+        android:hint="email@gmail.com" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register Name"
+        android:textColor="#80000000"
+        android:textSize="13sp"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/register_editText"
+        android:selectAllOnFocus="false"
+        android:singleLine="true"
+        android:hint="Register no.2" />
+
+</LinearLayout>

@@ -15,8 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,15 +35,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static boolean calledAlready = false;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final boolean[] firstTime = {true};
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Transactions");
+        toolbar.setTitle("Loading...");
         setSupportActionBar(toolbar);
 
 
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getHeaderView(R.id.registerEmailTextView);
 
@@ -67,12 +72,14 @@ public class MainActivity extends AppCompatActivity
         if (auth.getCurrentUser() != null) {
             FirebaseUser user = auth.getCurrentUser();
 
+            Log.d("DEBUG", "Logged in as: " + user.getDisplayName() + " , UID: " + user.getUid());
+
             // TextView teste: Mostra o nome do usuário
             //TextView test = (TextView) findViewById(R.id.test_textview);
             //test.setText("Hello, " + user.getDisplayName() + "!");
 
             // Buscar a View dentro do hamburger menu
-            View hView =  navigationView.getHeaderView(0);
+            View hView = navigationView.getHeaderView(0);
 
             // Dentro do hamburger menu, defenir uma das TextViews para mostrar email do usuário
             TextView email = (TextView) hView.findViewById(R.id.registerEmailTextView);
@@ -84,11 +91,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Buscar os dados do usuário
-        FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
         // Buscar a View dentro do hamburger menu
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
 
         // Links para TextViews dentro do hamburger menu
         final TextView title = (TextView) hView.findViewById(R.id.registerShopTextView);
@@ -103,7 +110,10 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot snapshot) {
                 // Se a lista de users na DB não tiver uma "child" igual ao ID deste usuário, então este usuário é novo e ainda não tem informação na DB
                 if (!(snapshot.hasChild(user.getUid()))) {
-                    // firstTimeSetup();
+                    firstTimeSetup();
+                } else {
+                    Log.d("DEBUG", "Entering mainLogic, shopID is: " + snapshot.child(user.getUid()).getValue().toString());
+                    mainLogic(user, name, title, snapshot.child(user.getUid()).getValue().toString());
                 }
             }
 
@@ -113,97 +123,58 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        // Por agora retiramos a informação da loja exemplo apenas
-        ref = ref.child("Shops").child("-KeGnV-utAaWIwGweqBI");
-        final DatabaseReference regRef = ref.child("registers").child(user.getUid());
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Shop shop_class = dataSnapshot.getValue(Shop.class);
-
-                Log.d("DEBUG","Loja: " + shop_class.getTitle());
-                // Dentro do hamburger menu, defenir uma das TextViews para mostrar o título da Shop
-                title.setText(shop_class.getTitle());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Nada
-            }
-        };
-        ref.addValueEventListener(postListener);
-
-        ValueEventListener postListener2 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Register register_class = dataSnapshot.getValue(Register.class);
-
-                Log.d("DEBUG", "ID: " + user.getUid() + ", ref: " + regRef.toString());
-                Log.d("DEBUG", "Object: " + dataSnapshot.toString());
-
-                // Dentro do hamburger menu, defenir uma das TextViews para mostrar o nome da caixa
-                name.setText(register_class.getRegisterName());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Nada
-            }
-        };
-        regRef.addValueEventListener(postListener2);
-
-        MenuItem addItem = (MenuItem) navigationView.getMenu().getItem(0);
-        onNavigationItemSelected(addItem);
-
-
     }
 
-    // Ainda não está pronto - Estou a trabalhar nisso
-    /**private void firstTimeSetup() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .title("Adicionar Nova Aposta")
-                .customView(R.layout.dialog_setupShop, true)
-                .negativeText("Cancelar")
-                .build();
+    void mainLogic(final FirebaseUser user, final TextView name, final TextView title, String shopID) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref = ref.child("Shops").child(shopID);
+            final DatabaseReference regRef = ref.child("registers").child(user.getUid());
 
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Shop shop_class = dataSnapshot.getValue(Shop.class);
 
-        Button create = (Button) dialog.getCustomView().findViewById(R.id.createShop);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final MaterialDialog dialog2 = new MaterialDialog.Builder(MainActivity.this)
-                        .title("Adicionar Nova Aposta")
-                        .customView(R.layout.dialog_createShop, true)
-                        .negativeText("Cancelar")
-                        .build();
+                    Log.d("DEBUG", "Loja: " + shop_class.getTitle());
+                    // Dentro do hamburger menu, defenir uma das TextViews para mostrar o título da Shop
+                    title.setText(shop_class.getTitle());
+                }
 
-                // AQUI: código
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Nada
+                }
+            };
+            ref.addValueEventListener(postListener);
 
-                dialog2.show();
-            }
-        });
+            ValueEventListener postListener2 = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Register register_class = dataSnapshot.getValue(Register.class);
 
-        Button join = (Button) dialog.getCustomView().findViewById(R.id.joinShop);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final MaterialDialog dialog2 = new MaterialDialog.Builder(MainActivity.this)
-                        .title("Adicionar Nova Aposta")
-                        .customView(R.layout.dialog_joinShop, true)
-                        .negativeText("Cancelar")
-                        .build();
+                    Log.d("DEBUG", "ID: " + user.getUid() + ", ref: " + regRef.toString());
+                    Log.d("DEBUG", "Object: " + dataSnapshot.toString());
 
-                // AQUI: código
+                    // Dentro do hamburger menu, defenir uma das TextViews para mostrar o nome da caixa
+                    name.setText(register_class.getRegisterName());
+                }
 
-                dialog2.show();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Nada
+                }
+            };
+            regRef.addValueEventListener(postListener2);
 
+            MenuItem addItem = (MenuItem) navigationView.getMenu().getItem(0);
+            onNavigationItemSelected(addItem);
 
-        dialog.show();
-    }**/
+        }
+
+    private void firstTimeSetup(){
+        startActivity(new Intent(MainActivity.this, firstTimeActivity.class));
+        finish();
+    }
 
     // SignOut e rederecionar para a classe Auth
     void signOut() {

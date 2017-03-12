@@ -10,17 +10,19 @@ class Shop {
     private Object items;
     private Object registers;
     private Object transactions;
+    private String currency;
 
     public Shop() {
     }
 
-    public Shop(Object Statistics, String creator, String title, Object items, Object registers, Object transactions) {
+    public Shop(Object Statistics, String creator, String title, Object items, Object registers, Object transactions, String currency) {
         this.Statistics = Statistics;
         this.creator = creator;
         this.title = title;
         this.items = items;
         this.registers = registers;
         this.transactions = transactions;
+        this.currency = currency;
     }
 
     public Object getStatistics() {
@@ -45,6 +47,10 @@ class Shop {
 
     public Object getTransactions() {
         return transactions;
+    }
+
+    public String getCurrency() {
+        return currency;
     }
 }
 
