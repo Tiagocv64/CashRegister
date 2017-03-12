@@ -3,6 +3,9 @@ package com.creation.tiagocv.cashregister;
 public class DatabaseClasses {
 }
 
+// Isto é um pouco estranho mas tem que ser assim
+// VER: https://firebase.google.com/docs/database/android/read-and-write
+
 class Shop {
     private Object Statistics;
     private String creator;
@@ -15,6 +18,7 @@ class Shop {
     public Shop() {
     }
 
+    // Isto é assim simplesmente porque tem que ser. Copia
     public Shop(Object Statistics, String creator, String title, Object items, Object registers, Object transactions, String currency) {
         this.Statistics = Statistics;
         this.creator = creator;

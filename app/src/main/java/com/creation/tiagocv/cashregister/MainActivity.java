@@ -34,6 +34,18 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    /** !!!!!!!!!!!!!! TIAGO LÊ ISTO !!!!!!!!!!!!!!
+     *
+     * Não sei o que já sabes sobre escrever e ler da DB do firebase portanto pus notas em quase tudo. Caga no que já sabias. A documentação na net é muito boa. No site da Firebase especialmente
+     *
+     * Se fores fazer uma das listas que é preciso (histórico, items, registers)
+     * Lê isto: https://github.com/firebase/FirebaseUI-Android/blob/master/database/README.md
+     * Eu usei na app do PB. É simples. Usa uma RecyclerView, é a ultima parte do texto. Mas lê tudo
+     *
+     * A maior parte dos Logs já não são precisos. Eu é que tive preguiça de tirar.
+     *
+     **/
+
     static boolean calledAlready = false;
     NavigationView navigationView;
 
@@ -112,6 +124,7 @@ public class MainActivity extends AppCompatActivity
                 if (!(snapshot.hasChild(user.getUid()))) {
                     firstTimeSetup();
                 } else {
+                    // Else, executar lógica principal
                     Log.d("DEBUG", "Entering mainLogic, shopID is: " + snapshot.child(user.getUid()).getValue().toString());
                     mainLogic(user, name, title, snapshot.child(user.getUid()).getValue().toString());
                 }
@@ -125,51 +138,64 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // Lógica Principal: Preencher campos no hamburger menu de acordo com a DB
     void mainLogic(final FirebaseUser user, final TextView name, final TextView title, String shopID) {
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            ref = ref.child("Shops").child(shopID);
-            final DatabaseReference regRef = ref.child("registers").child(user.getUid());
+        // Vamos buscar 2 Dados à DB: /Shops/$shopID/title (nome da loja) e /Shops/$shopID/registers/registerName (nome da caixa)
 
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Shop shop_class = dataSnapshot.getValue(Shop.class);
+        // DatabaseReference é o caminho/link da DB. Exemplo: https://cashregister-eeb90.firebaseio.com/Shops/-KeGnV-utAaWIwGweqBI/registers/0D04Rxm1itdMzB6v3yHmNm0jYGo1/
+        // Neste caso ref é na raiz da DB
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        // ref passa a ser em /Shops/$shopID
+        ref = ref.child("Shops").child(shopID);
 
-                    Log.d("DEBUG", "Loja: " + shop_class.getTitle());
-                    // Dentro do hamburger menu, defenir uma das TextViews para mostrar o título da Shop
-                    title.setText(shop_class.getTitle());
-                }
+        // Este postListener abre uma especie de nova thread que está sempre a verficar se algo mudou numa determinada referncia/caminho da DB
+        // Para perceber melhor LER: https://firebase.google.com/docs/database/android/read-and-write
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // VER A CLASSE Shop.java EM DatabaseClasses.java
+                // Isto pega nos dados que estão em /Shops/$shopID (ref) na DB e inicializa uma objeto da classe Shop com eles. Não há outra maneira de ler dados da DB do firebase
+                Shop shop_class = dataSnapshot.getValue(Shop.class);
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Nada
-                }
-            };
-            ref.addValueEventListener(postListener);
+                Log.d("DEBUG", "Loja: " + shop_class.getTitle());
+                // Dentro do hamburger menu, defenir uma das TextViews para mostrar o título da Shop
+                title.setText(shop_class.getTitle());
+            }
 
-            ValueEventListener postListener2 = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Register register_class = dataSnapshot.getValue(Register.class);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Nada
+            }
+        };
+        // Adicona o postListener à referência ref
+        ref.addValueEventListener(postListener);
 
-                    Log.d("DEBUG", "ID: " + user.getUid() + ", ref: " + regRef.toString());
-                    Log.d("DEBUG", "Object: " + dataSnapshot.toString());
+        // Criar uma nova ref: 'regRef' em /Shops/$shopID/registers/$uid
+        final DatabaseReference regRef = ref.child("registers").child(user.getUid());
 
-                    // Dentro do hamburger menu, defenir uma das TextViews para mostrar o nome da caixa
-                    name.setText(register_class.getRegisterName());
-                }
+        ValueEventListener postListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Register register_class = dataSnapshot.getValue(Register.class);
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Nada
-                }
-            };
-            regRef.addValueEventListener(postListener2);
+                Log.d("DEBUG", "ID: " + user.getUid() + ", ref: " + regRef.toString());
+                Log.d("DEBUG", "Object: " + dataSnapshot.toString());
 
-            MenuItem addItem = (MenuItem) navigationView.getMenu().getItem(0);
-            onNavigationItemSelected(addItem);
+                // Dentro do hamburger menu, defenir uma das TextViews para mostrar o nome da caixa
+                name.setText(register_class.getRegisterName());
+            }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Nada
+            }
+        };
+        regRef.addValueEventListener(postListener2);
+
+        MenuItem addItem = (MenuItem) navigationView.getMenu().getItem(0);
+        onNavigationItemSelected(addItem);
+
+    }
 
     // Se o user não tive loja, levá-lo ao setup
     private void firstTimeSetup(){

@@ -30,6 +30,7 @@ public class Auth extends AppCompatActivity {
                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
                                     new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
                             .setLogo(R.drawable.ic_launcher)
+                            // O SmartLock estava a dar uns problemas. Desativei por agora.
                             .setIsSmartLockEnabled(false)
                             .build(),
                     RC_SIGN_IN);

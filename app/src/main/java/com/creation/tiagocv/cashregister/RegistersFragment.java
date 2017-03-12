@@ -36,9 +36,6 @@ RegistersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_registers, container, false);
-        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //toolbar.setTitle("Add Transactions");
-        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
