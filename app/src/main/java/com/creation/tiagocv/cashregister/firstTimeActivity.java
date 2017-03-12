@@ -41,6 +41,7 @@ public class firstTimeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Mostrar seta no canto superior esquerdo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView name = (TextView) findViewById(R.id.name_textView);
@@ -98,6 +99,7 @@ public class firstTimeActivity extends AppCompatActivity {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Assim que o UID do usuário estiver na lista 'Users' da DB, levar o usuário para MainActivity
                 if (dataSnapshot.hasChild(user.getUid())) {
                     setupSuccess();
                 }
@@ -111,6 +113,7 @@ public class firstTimeActivity extends AppCompatActivity {
         rootRef.addValueEventListener(postListener);
     }
 
+    // Fazer signOut e voltar à classe Auth quando o usuário clica na seta do canto superior esquerdo
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         AuthUI.getInstance()
@@ -125,21 +128,26 @@ public class firstTimeActivity extends AppCompatActivity {
         return true;
     }
 
+    // Criar entradas relevantes na DB
     void createShop(String title, String currency, String name) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Register newRegister = new Register(1, name, 0, 0, 0);
+        // Por agora não escrevemos os nodes Statistics e Items na DB
         Shop newShop = new Shop(null, user.getUid(), title, null, null, null, currency);
 
         DatabaseReference shopRef = mDatabase.child("Shops").push();
         shopRef.setValue(newShop);
+        // Adicionar o dono à lista de registers
         shopRef.child("registers").child(user.getUid()).setValue(newRegister);
 
+        // Adicionar dono à lista de Users
         mDatabase.child("Users").child(user.getUid()).setValue(shopRef.getKey());
 
         setupSuccess();
     }
 
+    // Redireciona para a classe MainActivity
     void setupSuccess() {
         startActivity(new Intent(firstTimeActivity.this, MainActivity.class));
         finish();

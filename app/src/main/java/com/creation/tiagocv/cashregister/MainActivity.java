@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+    // Se o user não tive loja, levá-lo ao setup
     private void firstTimeSetup(){
         startActivity(new Intent(MainActivity.this, firstTimeActivity.class));
         finish();

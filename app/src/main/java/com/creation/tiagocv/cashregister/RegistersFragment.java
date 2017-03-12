@@ -45,7 +45,7 @@ RegistersFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final MaterialDialog dialog = new MaterialDialog.Builder(view.getContext())
-                        .title("Create New Shop")
+                        .title("Add New Register")
                         .customView(R.layout.dialog_invite_register, true)
                         .negativeText("Cancel")
                         .positiveText("Submit")
@@ -73,6 +73,7 @@ RegistersFragment extends Fragment {
         return view;
     }
 
+    // Buscar o ID da shop onde o user está para que o novo user possa ser convidado
     void preInviteRegister(final String email, final String name) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users");
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -88,6 +89,7 @@ RegistersFragment extends Fragment {
         });
     }
 
+    // Adicionar as entradas relevantes à DB para que o novo uer seja convidado
     void inviteRegister(String email, String name, String shopID) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Pending").child(shopID).child(name).setValue(email);
