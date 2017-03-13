@@ -32,14 +32,6 @@ public class HistoryFragment extends Fragment{
         //toolbar.setTitle("Add Transactions");
         //setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         Log.d("DEBUG", "Entered HistoryFragment!");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

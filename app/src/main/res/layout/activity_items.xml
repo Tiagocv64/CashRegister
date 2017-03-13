@@ -7,14 +7,43 @@
     android:fitsSystemWindows="true"
     tools:context="com.creation.tiagocv.cashregister.ItemsFragment">
 
-    <include layout="@layout/content_items" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_items" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="@dimen/fab_margin_small_ic"
+        android:clickable="false"
+        android:rotation="90"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|right"
+        app:srcCompat="@drawable/ic_looks_one_white_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_small_ic"
+        android:clickable="false"
+        android:rotation="-90"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_grid_on_white_24dp" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/fab_add" />
+        android:layout_margin="@dimen/fab_margin_big_ic"
+        android:visibility="visible"
+        app:srcCompat="@drawable/fab_add_36" />
+
 
 </android.support.design.widget.CoordinatorLayout>
