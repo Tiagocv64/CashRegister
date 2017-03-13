@@ -36,67 +36,22 @@ public class ItemsFragment extends Fragment {
         //toolbar.setTitle("Add Transactions");
         //setSupportActionBar(toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        final FloatingActionButton fabCategory = (FloatingActionButton) view.findViewById(R.id.fab_category);
-        final FloatingActionButton fabItem = (FloatingActionButton) view.findViewById(R.id.fab_item);
-        ViewCompat.animate(fab).rotation(-90f).setDuration(0).start();
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabCategory = (FloatingActionButton) view.findViewById(R.id.fab_category);
+        FloatingActionButton fabItem = (FloatingActionButton) view.findViewById(R.id.fab_category);
+
+        fabCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!pressedFAB) {
-                    ViewCompat.animate(fab).
-                            rotation(135f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator())
-                            .start();
-                    ViewCompat.animate(fabCategory).
-                            rotation(90f).
-                            translationY(-250f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator())
-                            .start();
-                    ViewCompat.animate(fabItem).
-                            rotation(0f).
-                            translationY(-450f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator())
-                            .start();
-                    fabCategory.setClickable(true);
-                    fabItem.setClickable(true);
-                    pressedFAB = !pressedFAB;
-                } else {
-                    ViewCompat.animate(fab).
-                            rotation(0f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator())
-                            .start();
-                    ViewCompat.animate(fabCategory).
-                            rotation(0f).
-                            translationY(0f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator(0f))
-                            .start();
-                    ViewCompat.animate(fabItem).
-                            rotation(-90f).
-                            translationY(0f).
-                            withLayer().
-                            setDuration(300).
-                            setInterpolator(new OvershootInterpolator(0f))
-                            .start();
-                    fabCategory.setClickable(false);
-                    fabItem.setClickable(false);
-
-                    pressedFAB = !pressedFAB;
-                }
+                //CODE
             }
         });
 
-                
+        fabItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //CODE
+            }
+        });
 
         Log.d("DEBUG", "Entered ItemsFragment!");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
