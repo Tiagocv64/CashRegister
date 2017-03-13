@@ -23,4 +23,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp" />
 
+    <ListView
+        android:id="@+id/list_registers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_textview2"/>
+
 </RelativeLayout>

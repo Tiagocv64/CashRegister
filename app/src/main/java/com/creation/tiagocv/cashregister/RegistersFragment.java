@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -22,9 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class
 RegistersFragment extends Fragment {
 
+    ArrayList<String> RegistersList = new ArrayList<String>();
     View view;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -36,6 +42,7 @@ RegistersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_registers, container, false);
+        final ListView listView = (ListView) view.findViewById(R.id.list_registers);  //ListView com o nome das caixas
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +70,49 @@ RegistersFragment extends Fragment {
             }
         });
 
+
         Log.d("DEBUG", "Entered RegistersFragment!");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()); //Reference ao utilizador
 
+
+        //Buscar os nomes para a RegistersList e popular a ListView
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userShop = dataSnapshot.getValue(String.class);
+                Log.e("Log", "UserShop: " +userShop);
+                DatabaseReference refRegisters = FirebaseDatabase.getInstance().getReference().child("Shops").child(userShop).child("registers");
+
+                refRegisters.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<String> RegistersList = new ArrayList<String>();
+                        // Result will be holded Here
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            RegistersList.add(String.valueOf(dsp.child("registerName").getValue())); //adicionar os nomes a ArrayList
+                        }
+                        //Popular a ListView
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, RegistersList);
+                        listView.setAdapter(arrayAdapter);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.w("Register", "loadPost:onCancelled", databaseError.toException());
+                        // ...
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("Register", "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        reference.addValueEventListener(postListener);
 
         return view;
     }
@@ -94,5 +141,4 @@ RegistersFragment extends Fragment {
         Snackbar.make(view, "Your new Register will be added momentarily", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
-
 }
