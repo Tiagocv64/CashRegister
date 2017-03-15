@@ -36,8 +36,8 @@ public class ItemsFragment extends Fragment {
         //toolbar.setTitle("Add Transactions");
         //setSupportActionBar(toolbar);
 
-        FloatingActionButton fabCategory = (FloatingActionButton) view.findViewById(R.id.fab_category);
-        FloatingActionButton fabItem = (FloatingActionButton) view.findViewById(R.id.fab_category);
+        com.github.clans.fab.FloatingActionButton fabCategory = (com.github.clans.fab.FloatingActionButton) view.findViewById(R.id.fab_category);
+        com.github.clans.fab.FloatingActionButton fabItem = (com.github.clans.fab.FloatingActionButton) view.findViewById(R.id.fab_item);
 
         fabCategory.setOnClickListener(new View.OnClickListener() {
             @Override

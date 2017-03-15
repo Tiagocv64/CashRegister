@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ RegistersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_registers, container, false);
-        final ListView listView = (ListView) view.findViewById(R.id.list_registers);  //ListView com o nome das caixas
+        // qfinal ListView listView = (ListView) view.findViewById(R.id.list_registers);  //ListView com o nome das caixas
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +94,8 @@ RegistersFragment extends Fragment {
                             RegistersList.add(String.valueOf(dsp.child("registerName").getValue())); //adicionar os nomes a ArrayList
                         }
                         //Popular a ListView
-                        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, RegistersList);
-                        listView.setAdapter(arrayAdapter);
+                       // ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, RegistersList);
+                        //listView.setAdapter(arrayAdapter);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -113,6 +114,12 @@ RegistersFragment extends Fragment {
         };
 
         reference.addValueEventListener(postListener);
+
+
+        GridLayout gridRegisters = (GridLayout) view.findViewById(R.id.root_grid_layout);
+        gridRegisters.setColumnCount(2);
+
+
 
         return view;
     }
