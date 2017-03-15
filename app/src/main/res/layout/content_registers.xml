@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_grid_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:columnWidth="90dp"
+    android:horizontalSpacing="10dp"
+    android:numColumns="auto_fit"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:stretchMode="columnWidth"
+    android:gravity="center"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:verticalSpacing="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.creation.tiagocv.cashregister.RegistersFragment"
     tools:showIn="@layout/activity_registers">
 
-    <include layout="@layout/registers_card_view"
-        android:layout_height="200dp"
-        android:layout_width="200dp"
-        android:layout_marginTop="50dp"
-        />
+    <!--<include-->
+        <!--layout="@layout/registers_card_view"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="50dp" />-->
 
-<!--
-    <TextView
-        android:id="@+id/test_textview2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registers List"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+    <!--
+        <TextView
+            android:id="@+id/test_textview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registers List"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp" />
 
-    <ListView
-        android:id="@+id/list_registers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/test_textview2"/>
-
-
--->
+        <ListView
+            android:id="@+id/list_registers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/test_textview2"/>
 
 
-</GridLayout>
+    -->
+
+
+</GridView>

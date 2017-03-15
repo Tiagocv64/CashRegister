@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,11 +30,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class
 RegistersFragment extends Fragment {
 
-    ArrayList<String> RegistersList = new ArrayList<String>();
+    ArrayList<String[]> RegistersList = new ArrayList<String[]>();
     View view;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -43,7 +48,6 @@ RegistersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_registers, container, false);
-        // qfinal ListView listView = (ListView) view.findViewById(R.id.list_registers);  //ListView com o nome das caixas
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -88,14 +92,32 @@ RegistersFragment extends Fragment {
                 refRegisters.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ArrayList<String> RegistersList = new ArrayList<String>();
                         // Result will be holded Here
                         for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                            RegistersList.add(String.valueOf(dsp.child("registerName").getValue())); //adicionar os nomes a ArrayList
+                            String[] registerData = new String[5];
+                            registerData[0] = (String.valueOf(dsp.child("ranking").getValue())); //adicionar os nomes a ArrayList
+                            registerData[1] = (String.valueOf(dsp.child("registerName").getValue())); //adicionar os nomes a ArrayList
+                            registerData[2] = (String.valueOf(dsp.child("salesNumber").getValue())); //adicionar os nomes a ArrayList
+                            registerData[3] = (String.valueOf(dsp.child("salesProfit").getValue())); //adicionar os nomes a ArrayList
+                            registerData[4] = (String.valueOf(dsp.child("salesValue").getValue())); //adicionar os nomes a ArrayList
+
+                            RegistersList.add(registerData);
                         }
-                        //Popular a ListView
-                       // ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, RegistersList);
-                        //listView.setAdapter(arrayAdapter);
+
+                        //Ordenar por ranking
+                        Collections.sort(
+                                RegistersList,
+                                new Comparator<String[]>()
+                                {
+                                    public int compare(String[] lhs, String[] rhs)
+                                    {
+                                        return lhs[0].compareTo(rhs[0]);
+                                    }
+                                }
+                        );
+
+                        GridView gridview = (GridView) view.findViewById(R.id.root_grid_layout);
+                        gridview.setAdapter(new RegistersAdapter(getActivity(), RegistersList));
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -116,8 +138,15 @@ RegistersFragment extends Fragment {
         reference.addValueEventListener(postListener);
 
 
-        GridLayout gridRegisters = (GridLayout) view.findViewById(R.id.root_grid_layout);
-        gridRegisters.setColumnCount(2);
+
+
+//        gridview.setOnItemClickListener(new OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v,
+//                                    int position, long id) {
+//                Toast.makeText(HelloGridView.this, "" + position,
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 
