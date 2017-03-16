@@ -1,109 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
-    android:minHeight="200dp"
-    android:minWidth="200dp"
-    android:layout_height="200dp"
-    app:cardUseCompatPadding="true">
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:minHeight="150dp"
+        android:minWidth="150dp"
+        app:cardUseCompatPadding="false">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#44000000"
-            app:cardCornerRadius="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:layout_gravity="top"
                 android:background="#44000000"
                 android:scaleType="fitXY"
                 android:src="@drawable/material_money" />
-        </android.support.v7.widget.CardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:minHeight="100dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="8dp">
-
-                <ImageView
-                    android:id="@+id/medal_image_view"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_medal" />
-
-                <TextView
-                    android:id="@+id/text_view_medal_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/medal_image_view"
-                    android:layout_alignLeft="@id/medal_image_view"
-                    android:layout_alignRight="@id/medal_image_view"
-                    android:layout_alignTop="@id/medal_image_view"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="25dp"
-                    android:gravity="center"
-                    android:text="#1"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-
-            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:minHeight="100dp"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:minHeight="75dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/text_view_caixa"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp"
-                    android:text="Caixa Tiago"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/text_view_vendas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vendas: 143" />
+                    <ImageView
+                        android:id="@+id/medal_image_view"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_medal" />
 
-                <TextView
-                    android:id="@+id/text_view_lucro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lucro: 1353€" />
+                    <TextView
+                        android:id="@+id/text_view_medal_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/medal_image_view"
+                        android:layout_alignLeft="@id/medal_image_view"
+                        android:layout_alignRight="@id/medal_image_view"
+                        android:layout_alignTop="@id/medal_image_view"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="25dp"
+                        android:gravity="center"
+                        android:text="#1"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/text_view_valor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Valor: 3045€" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:minHeight="75dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_caixa"
+                        android:lines="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp"
+                        android:text="Caixa Tiago"
+                        android:ellipsize="end"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_vendas"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"
+                        android:text="Vendas: 143" />
+
+                    <TextView
+                        android:id="@+id/text_view_lucro"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"
+                        android:text="Lucro: 1353€" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
 
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>

@@ -37,29 +37,24 @@ public class RegistersAdapter extends BaseAdapter {
 
     // create a new CardView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        CardView cardView;
+        View cardView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            cardView = (CardView) View.inflate( parent.getContext(), R.layout.card_view_registers, null);
-           cardView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, GridView.AUTO_FIT));
-            cardView.setMinimumWidth(200);
-            cardView.setMinimumHeight(200);
+            cardView =  View.inflate( parent.getContext(), R.layout.card_view_registers, null);
 
             TextView textViewRegisterMedalNumber = (TextView) cardView.findViewById(R.id.text_view_medal_number);
             TextView textViewRegisterCaixa = (TextView) cardView.findViewById(R.id.text_view_caixa);
             TextView textViewRegisterVendas = (TextView) cardView.findViewById(R.id.text_view_vendas);
             TextView textViewRegisterLucro = (TextView) cardView.findViewById(R.id.text_view_lucro);
-            TextView textViewRegisterValor = (TextView) cardView.findViewById(R.id.text_view_valor);
 
             textViewRegisterMedalNumber.setText("#" + mList.get(position)[0]);
             textViewRegisterCaixa.setText(mList.get(position)[1]);
             textViewRegisterVendas.setText("Vendas: " + mList.get(position)[2]);
             textViewRegisterLucro.setText("Lucro: " + mList.get(position)[3]);
-            textViewRegisterValor.setText("Valor: " + mList.get(position)[4]);
 
             cardView.setPadding(8, 8, 8, 8);
         } else {
-            cardView = (CardView) convertView;
+            cardView =  convertView;
         }
 
 
