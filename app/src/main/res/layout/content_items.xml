@@ -13,6 +13,7 @@
     tools:context="com.creation.tiagocv.cashregister.ItemsFragment"
     tools:showIn="@layout/activity_items">
 
+    <include layout="@layout/card_view_category"/>
     <TextView
         android:id="@+id/test_textview2"
         android:layout_width="wrap_content"

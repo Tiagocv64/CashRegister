@@ -118,6 +118,15 @@ RegistersFragment extends Fragment {
 
                         GridView gridview = (GridView) view.findViewById(R.id.root_grid_layout);
                         gridview.setAdapter(new RegistersAdapter(getActivity(), RegistersList));
+
+            //        gridview.setOnItemClickListener(new OnItemClickListener() {
+            //            public void onItemClick(AdapterView<?> parent, View v,
+            //                                    int position, long id) {
+            //                Toast.makeText(HelloGridView.this, "" + position,
+            //                        Toast.LENGTH_SHORT).show();
+            //            }
+            //        });
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -140,13 +149,7 @@ RegistersFragment extends Fragment {
 
 
 
-//        gridview.setOnItemClickListener(new OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v,
-//                                    int position, long id) {
-//                Toast.makeText(HelloGridView.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
 
 

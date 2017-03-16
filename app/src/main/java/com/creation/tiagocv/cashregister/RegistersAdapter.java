@@ -2,18 +2,13 @@ package com.creation.tiagocv.cashregister;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by tcver on 15/03/2017.
@@ -45,7 +40,7 @@ public class RegistersAdapter extends BaseAdapter {
         CardView cardView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            cardView = (CardView) View.inflate( parent.getContext(), R.layout.registers_card_view, null);
+            cardView = (CardView) View.inflate( parent.getContext(), R.layout.card_view_registers, null);
            cardView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, GridView.AUTO_FIT));
             cardView.setMinimumWidth(200);
             cardView.setMinimumHeight(200);
